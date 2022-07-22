@@ -25,14 +25,41 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract metadata (tags, labels) for Docker
-        id: meta
+        id: base
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/archlinux
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/archlinux/base
+      - name: Extract metadata (tags, labels) for Docker
+        id: compress
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/archlinux/compress
+      - name: Extract metadata (tags, labels) for Docker
+        id: build
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/archlinux/build
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: ./archlinux
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          target: base
+          tags: ${{ steps.base.outputs.tags }}
+          labels: ${{ steps.base.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./archlinux
+          push: true
+          target: compress
+          tags: ${{ steps.compress.outputs.tags }}
+          labels: ${{ steps.compress.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./archlinux
+          push: true
+          target: build
+          tags: ${{ steps.build.outputs.tags }}
+          labels: ${{ steps.build.outputs.labels }}
