@@ -34,5 +34,22 @@ jobs:
         with:
           context: ./archlinux
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          target: base
+          tags: ${{ steps.base.outputs.tags }}/base
+          labels: ${{ steps.base.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./archlinux
+          push: true
+          target: compress
+          tags: ${{ steps.compress.outputs.tags }}/compress
+          labels: ${{ steps.compress.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./archlinux
+          push: true
+          target: build
+          tags: ${{ steps.build.outputs.tags }}/build
+          labels: ${{ steps.build.outputs.labels }}
