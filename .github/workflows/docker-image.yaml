@@ -28,7 +28,7 @@ jobs:
         id: base
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/archlinux/base
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/archlinux
       - name: Extract metadata (tags, labels) for Docker
         id: compress
         uses: docker/metadata-action@v4

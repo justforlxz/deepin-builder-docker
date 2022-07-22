@@ -12,11 +12,11 @@ RUN pacman -Sy openssh devtools gnupg --noconfirm --noprogressbar --needed
 RUN pacman -Sy deepin-keyring devtools-deepin-git git base-devel --noconfirm --noprogressbar --needed
 
 FROM base AS compress
-COPY compress.sh /usr/bin/entrypoint.sh
-RUN chmod +x /usr/bin/entrypoint.sh
-CMD ['entrypoint.sh']
+COPY compress.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+CMD ["entrypoint.sh"]
 
 FROM base AS build
-COPY build.py /usr/bin/entrypoint.sh
-RUN chmod +x /usr/bin/entrypoint.sh
-CMD ['entrypoint.sh']
+COPY build.py /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+CMD ["entrypoint.sh"]
