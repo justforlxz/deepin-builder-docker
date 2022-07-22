@@ -14,9 +14,9 @@ RUN pacman -Sy deepin-keyring devtools-deepin-git git base-devel --noconfirm --n
 FROM base AS compress
 COPY compress.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-CMD ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 FROM base AS build
 COPY build.py /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-CMD ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
