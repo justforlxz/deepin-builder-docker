@@ -1,7 +1,6 @@
 # syntax = docker/dockerfile:1.3-labs
 
 FROM archlinux:latest AS base
-WORKDIR /work
 RUN pacman-key --init && pacman-key --populate
 RUN pacman-key -r AFAAFC4EF142770966FC4C805987B0C2A80EA669 && \
   pacman-key --lsign-key AFAAFC4EF142770966FC4C805987B0C2A80EA669
@@ -15,7 +14,7 @@ RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 FROM base AS build
-COPY build.py /entrypoint.sh
+COPY build.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 

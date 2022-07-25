@@ -1,0 +1,18 @@
+name: 'Build'
+description: 'Build'
+inputs:
+  workdir:
+    description: 'set workdir'
+    required: true
+    default: ''
+  repo:
+    description: 'repo'
+    required: true
+    default: ''
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/justforlxz/deepin-builder-docker/archlinux/compress:master'
+  args:
+    - ${{ inputs.workdir }}
+    - ${{ inputs.repo }}
+

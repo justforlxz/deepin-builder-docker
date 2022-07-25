@@ -1,8 +1,8 @@
 #!/bin/bash
 
-repo=$1
+cd $1
+repo=$2
 
-cd /work
 mkdir ${repo}-git
 rsync -a . ${repo}-git --exclude "${repo}-git"
 rm -rf ${repo}-git/archlinux

@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-cd /work
+cd $1
 
 if [[ x$1 == "xlock" ]];
 then
@@ -32,3 +32,5 @@ then
       git push -f
     fi
 fi
+
+rm -rf push-sleep || true
