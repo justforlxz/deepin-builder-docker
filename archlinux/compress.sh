@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $1
+cd $GITHUB_WORKSPACE
 repo=$2
 
 mkdir ${repo}-git

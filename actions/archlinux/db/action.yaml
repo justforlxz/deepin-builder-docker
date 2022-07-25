@@ -1,12 +1,12 @@
 name: 'Build'
 description: 'Build'
 inputs:
-  workdir:
-    description: 'set workdir'
+  lock:
+    description: 'set lock state'
     required: true
     default: ''
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/justforlxz/deepin-builder-docker/archlinux/db:master'
   args:
-    - ${{ inputs.workdir }}
+    - ${{ inputs.lock }}

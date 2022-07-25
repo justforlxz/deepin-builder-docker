@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-cd $1
+cd $GITHUB_WORKSPACE
 
 if [[ x$1 == "xlock" ]];
 then
