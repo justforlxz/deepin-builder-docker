@@ -39,6 +39,16 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/archlinux/build
+      - name: Extract metadata (tags, labels) for Docker
+        id: db
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/archlinux/db
+      - name: Extract metadata (tags, labels) for Docker
+        id: commit
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/archlinux/commit
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -63,3 +73,19 @@ jobs:
           target: build
           tags: ${{ steps.build.outputs.tags }}
           labels: ${{ steps.build.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./archlinux
+          push: true
+          target: db
+          tags: ${{ steps.db.outputs.tags }}
+          labels: ${{ steps.db.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./archlinux
+          push: true
+          target: commit
+          tags: ${{ steps.commit.outputs.tags }}
+          labels: ${{ steps.commit.outputs.labels }}

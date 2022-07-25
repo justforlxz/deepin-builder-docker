@@ -2,14 +2,12 @@
 
 FROM archlinux:latest AS base
 WORKDIR /work
-RUN pacman-key --init
-RUN pacman-key --populate
-RUN pacman-key -r AFAAFC4EF142770966FC4C805987B0C2A80EA669
-RUN pacman-key --lsign-key AFAAFC4EF142770966FC4C805987B0C2A80EA669
+RUN pacman-key --init && pacman-key --populate
+RUN pacman-key -r AFAAFC4EF142770966FC4C805987B0C2A80EA669 && \
+  pacman-key --lsign-key AFAAFC4EF142770966FC4C805987B0C2A80EA669
 RUN echo "[deepin]" >> /etc/pacman.conf
 RUN echo "Server = https://deepin-community.github.io/arch-dde-repo" >> /etc/pacman.conf
-RUN pacman -Sy openssh devtools gnupg --noconfirm --noprogressbar --needed
-RUN pacman -Sy deepin-keyring devtools-deepin-git git base-devel --noconfirm --noprogressbar --needed
+RUN pacman -Sy openssh devtools gnupg deepin-keyring devtools-deepin-git git base-devel --noconfirm --noprogressbar --needed
 
 FROM base AS compress
 COPY compress.sh /entrypoint.sh
@@ -18,5 +16,15 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 FROM base AS build
 COPY build.py /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
+FROM base AS db
+COPY db.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
+FROM base AS commit
+COPY commit.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
