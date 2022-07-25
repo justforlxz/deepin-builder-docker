@@ -10,4 +10,3 @@ runs:
   image: 'docker://ghcr.io/justforlxz/deepin-builder-docker/archlinux/compress:master'
   args:
     - ${{ inputs.repo }}
-
