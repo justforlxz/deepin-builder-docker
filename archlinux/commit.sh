@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-cd $GITHUB_WORKSPACE
+cd $1
 
 mkdir pkgs && find . -name "*.zst" | xargs -I {} cp {} pkgs
 

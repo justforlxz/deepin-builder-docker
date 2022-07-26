@@ -1,7 +1,7 @@
 #!/bin/bash
 
-cd $GITHUB_WORKSPACE
-repo=$1
+cd $1
+repo=$2
 
 mkdir ${repo}-git
 rsync -av . ${repo}-git --exclude ${repo}-git

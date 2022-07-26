@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-cd $GITHUB_WORKSPACE
+cd $1
 
 repo=$2
 
