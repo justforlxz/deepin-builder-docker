@@ -12,3 +12,6 @@ rsync -a archlinux/* /home/user/${repo}
 chown -R user /home/user/${repo}
 cd /home/user/${repo}
   deepin-x86_64-build -- -U user
+  mkdir $1/.pkgs
+  cp /home/user/${repo}/*.zst $1/.pkgs
+

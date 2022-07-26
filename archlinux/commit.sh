@@ -2,11 +2,9 @@
 
 cd $1
 
-mkdir pkgs && find . -name "*.zst" | xargs -I {} cp {} pkgs
-
 git clone git@github.com:deepin-community/arch-dde-repo.git
 
-cd pkgs
+cd .pkgs
 
 for pkg in *.zst; do
     package=$(pacman -Qq $pkg | awk '{print $1}')
