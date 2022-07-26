@@ -11,5 +11,11 @@ for pkg in *.zst; do
     gpg --detach-sign --default-key builder $pkg
     cp -a $pkg ../arch-dde-repo
     cp $pkg.sig ../arch-dde-repo
-    repo-add -p -R ../arch-dde-repo/deepin.db.tar.xz $pkg
+    $(cd ../arch-dde-repo && repo-add -p -R ../arch-dde-repo/deepin.db.tar.xz $pkg)
 done
+
+cd ../arch-dde-repo
+
+git add .
+git commit --amend
+git push -f
