@@ -8,22 +8,24 @@ RUN echo "[deepin]" >> /etc/pacman.conf
 RUN echo "Server = https://deepin-community.github.io/arch-dde-repo" >> /etc/pacman.conf
 RUN pacman -Sy openssh devtools gnupg deepin-keyring devtools-deepin-git git base-devel --noconfirm --noprogressbar --needed
 
+COPY db.sh /db
+COPY compress.sh /compress
+COPY build.sh /build
+COPY commit.sh /commit
+
+RUN chmod +x /db
+RUN chmod +x /compress
+RUN chmod +x /build
+RUN chmod +x /commit
+
 FROM base AS compress
-COPY compress.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/compress"]
 
 FROM base AS build
-COPY build.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/build"]
 
 FROM base AS db
-COPY db.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/db"]
 
 FROM base AS commit
-COPY commit.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/commit"]
