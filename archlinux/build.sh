@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 cd $1
-
 repo=$2
+version=$3
 
 sed -i "/pkgver=/cpkgver=${version}" archlinux/PKGBUILD
 sed -i "s|MAKEFLAGS=.*|MAKEFLAGS=-j$(nproc)|" /etc/makepkg.conf
