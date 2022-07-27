@@ -6,6 +6,7 @@ if [[ x$1 == "xlock" ]];
 then
     for (( ; ; ))
     do
+      cd $GITHUB_WORKSPACE
       rm -rf push-sleep
       git clone git@github.com:deepin-community/push-sleep.git -b arch
       cd push-sleep
