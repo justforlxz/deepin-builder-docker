@@ -1,0 +1,91 @@
+name: Create and publish a Docker image
+
+on:
+  push:
+    paths:
+      - 'debian/*'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  debian:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: base
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/debian
+      - name: Extract metadata (tags, labels) for Docker
+        id: compress
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/debian/compress
+      - name: Extract metadata (tags, labels) for Docker
+        id: build
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/debian/build
+      - name: Extract metadata (tags, labels) for Docker
+        id: db
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/debian/db
+      - name: Extract metadata (tags, labels) for Docker
+        id: commit
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/debian/commit
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./debian
+          push: true
+          target: base
+          tags: ${{ steps.base.outputs.tags }}
+          labels: ${{ steps.base.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./debian
+          push: true
+          target: compress
+          tags: ${{ steps.compress.outputs.tags }}
+          labels: ${{ steps.compress.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./debian
+          push: true
+          target: build
+          tags: ${{ steps.build.outputs.tags }}
+          labels: ${{ steps.build.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./debian
+          push: true
+          target: db
+          tags: ${{ steps.db.outputs.tags }}
+          labels: ${{ steps.db.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./debian
+          push: true
+          target: commit
+          tags: ${{ steps.commit.outputs.tags }}
+          labels: ${{ steps.commit.outputs.labels }}
