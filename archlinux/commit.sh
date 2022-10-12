@@ -8,7 +8,7 @@ cd .pkgs
 
 for pkg in *.zst; do
     cd $1/.pkgs
-    package=$(pacman -Qq $pkg | awk '{print $1}')
+    package=$(pacman -Qp $pkg | awk '{print $1}')
     gpg --detach-sign --default-key builder $pkg
     cp -a $pkg ../arch-dde-repo
     cp $pkg.sig ../arch-dde-repo
