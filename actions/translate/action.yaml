@@ -1,0 +1,5 @@
+name: 'Translate Check'
+description: 'tx pull check'
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/justforlxz/deepin-builder-docker/translate:latest'
