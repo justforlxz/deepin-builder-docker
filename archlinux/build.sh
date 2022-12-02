@@ -4,8 +4,6 @@ cd $1
 repo=$2
 version=$3
 
-pacman -Syyu
-
 sed -i "/pkgver=/cpkgver=${version}" archlinux/PKGBUILD
 sed -i "s|MAKEFLAGS=.*|MAKEFLAGS=-j$(nproc)|" /etc/makepkg.conf
 useradd -m user
