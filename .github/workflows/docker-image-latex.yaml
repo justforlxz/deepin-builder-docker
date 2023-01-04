@@ -1,0 +1,30 @@
+name: Create and publish a Docker image
+
+on:
+  push:
+    paths:
+      - 'latex/*'
+env:
+  REGISTRY: ghcr.io
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./latex
+          push: true
+          tags: ghcr.io/justforlxz/deepin-builder-docker/latex:latest
+          labels: org.opencontainers.image.title=deepin-builder-docker

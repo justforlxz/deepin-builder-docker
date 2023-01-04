@@ -1,0 +1,17 @@
+name: 'latex'
+description: 'export pdf'
+inputs:
+  workdir:
+    description: 'workdir'
+    required: true
+    default: ''
+  file:
+    description: 'build file'
+    required: true
+    default: ''
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/justforlxz/deepin-builder-docker/latex:latest'
+  args:
+    - ${{ inputs.workdir }}
+    - ${{ inputs.file }}
